@@ -241,13 +241,13 @@ export default function HealthForm() {
         {/* Intro */}
         <div className="mb-8 max-w-lg mx-auto space-y-3 text-center">
           <p className="text-sm text-slate-500 leading-relaxed">
-            Many people have tried unconventional health protocols, often outside mainstream clinical practice. Some saw significant improvements. Some didn&apos;t. Either way, their experience is valuable data.
+            Many people have tried approaches that mainstream medicine hasn&apos;t caught up with yet, whether to address a specific condition or simply to feel and function better. Some saw real improvements. Most of those experiences never get recorded anywhere.
           </p>
           <p className="text-sm text-slate-500 leading-relaxed">
-            We&apos;re building a structured record of these experiences — with a particular focus on cancer patients, though any serious or chronic condition is welcome — so that approaches which currently exist only as scattered anecdote can gain the documented basis they need for wider recognition and formal validation.
+            We&apos;re collecting these accounts to build a structured record and identify patterns that could give these approaches the documented basis they need for wider recognition and formal validation.
           </p>
           <p className="text-sm text-slate-500 leading-relaxed">
-            This form is anonymous by default. Share only what you&apos;re comfortable sharing. There are no right or wrong answers — honest accounts of what didn&apos;t work are just as important as successes.
+            This form is anonymous by default. Share only what you&apos;re comfortable sharing. There are no right or wrong answers. Honest accounts of what didn&apos;t work are just as important as successes.
           </p>
           <p className="text-sm text-slate-700 font-semibold pt-1">
             All fields are optional. Skip anything you&apos;d rather not answer.
