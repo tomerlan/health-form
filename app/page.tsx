@@ -9,6 +9,7 @@ type FormData = {
   biologicalSex: string
   conditions: string
   medications: string
+  cancerDiagnosis: string
 
   // Section 2 – The Protocol
   protocolName: string
@@ -33,6 +34,7 @@ const INITIAL: FormData = {
   biologicalSex: '',
   conditions: '',
   medications: '',
+  cancerDiagnosis: '',
   protocolName: '',
   duration: '',
   protocolDescription: '',
@@ -261,7 +263,19 @@ export default function HealthForm() {
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-semibold text-stone-800 mb-1">Health Protocol Intake</h1>
-          <p className="text-stone-500 text-sm">Share your experience to help others learn what works</p>
+        </div>
+
+        {/* Intro */}
+        <div className="mb-8 text-center max-w-lg mx-auto space-y-3">
+          <p className="text-sm text-stone-400 leading-relaxed">
+            Many people have tried unconventional health protocols, often outside mainstream clinical practice. Some saw significant improvements. Some didn&apos;t. Either way, their experience is valuable data.
+          </p>
+          <p className="text-sm text-stone-400 leading-relaxed">
+            We&apos;re collecting these accounts to identify patterns that clinical research hasn&apos;t yet formalized, with a specific focus on helping cancer patients find approaches worth exploring alongside conventional treatment.
+          </p>
+          <p className="text-sm text-stone-400 leading-relaxed">
+            This form is anonymous by default. Share only what you&apos;re comfortable sharing. There are no right or wrong answers — honest accounts of what didn&apos;t work are just as important as successes.
+          </p>
         </div>
 
         {/* Progress */}
@@ -327,6 +341,15 @@ export default function HealthForm() {
                   value={data.medications}
                   onChange={set('medications')}
                   placeholder="e.g. Metformin 500mg, Vitamin D 5000 IU…"
+                />
+              </div>
+              <div>
+                <Label optional>Cancer diagnosis</Label>
+                <p className="text-xs text-stone-400 mb-1.5">If applicable — type, stage, and when diagnosed. Leave blank if not relevant.</p>
+                <TextArea
+                  value={data.cancerDiagnosis}
+                  onChange={set('cancerDiagnosis')}
+                  placeholder="e.g. Stage 3 breast cancer, diagnosed January 2023…"
                 />
               </div>
             </>
