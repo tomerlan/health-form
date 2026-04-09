@@ -3,25 +3,18 @@
 import { useState } from 'react'
 
 type FormData = {
-  // Section 1 – About You
   identifier: string
   ageRange: string
   biologicalSex: string
   conditions: string
   medications: string
   cancerDiagnosis: string
-
-  // Section 2 – The Protocol
   protocolName: string
   duration: string
   protocolDescription: string
-
-  // Section 3 – Challenges & Adjustments
   issues: string
   adjustments: string
   difficultyRating: string
-
-  // Section 4 – Outcomes
   healthChanges: string
   formalTracking: string
   overallEvaluation: string
@@ -47,15 +40,10 @@ const INITIAL: FormData = {
   anythingElse: '',
 }
 
-const STEPS = [
-  'About You',
-  'The Protocol',
-  'Challenges & Adjustments',
-  'Outcomes',
-]
+const STEPS = ['About You', 'The Protocol', 'Challenges & Adjustments', 'Outcomes']
 
 const AGE_RANGES = ['Under 18', '18–24', '25–34', '35–44', '45–54', '55–64', '65+']
-const SEX_OPTIONS = ['Male', 'Female', 'Intersex', 'Prefer not to say']
+const SEX_OPTIONS = ['Male', 'Female', 'Other / Prefer not to say']
 const DURATIONS = [
   'Less than 1 week',
   '1–2 weeks',
@@ -75,25 +63,22 @@ const EVALUATIONS = [
   'Too early to tell',
 ]
 
-function Label({ children, optional }: { children: React.ReactNode; optional?: boolean }) {
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <label className="block text-sm font-medium text-stone-700 mb-1">
+    <label className="block text-sm font-medium text-slate-700 mb-1.5">
       {children}
-      {optional && <span className="ml-1 text-xs text-stone-400 font-normal">(optional)</span>}
     </label>
   )
 }
 
+function Hint({ children }: { children: React.ReactNode }) {
+  return <p className="text-xs text-slate-400 mb-1.5 leading-relaxed">{children}</p>
+}
+
 function TextArea({
-  value,
-  onChange,
-  placeholder,
-  rows = 3,
+  value, onChange, placeholder, rows = 3,
 }: {
-  value: string
-  onChange: (v: string) => void
-  placeholder?: string
-  rows?: number
+  value: string; onChange: (v: string) => void; placeholder?: string; rows?: number
 }) {
   return (
     <textarea
@@ -101,19 +86,15 @@ function TextArea({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm text-stone-800 placeholder-stone-400 focus:border-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-200 resize-none transition"
+      className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 resize-none transition"
     />
   )
 }
 
 function TextInput({
-  value,
-  onChange,
-  placeholder,
+  value, onChange, placeholder,
 }: {
-  value: string
-  onChange: (v: string) => void
-  placeholder?: string
+  value: string; onChange: (v: string) => void; placeholder?: string
 }) {
   return (
     <input
@@ -121,46 +102,41 @@ function TextInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm text-stone-800 placeholder-stone-400 focus:border-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-200 transition"
+      className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-800 placeholder-slate-300 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 transition"
     />
   )
 }
 
 function Select({
-  value,
-  onChange,
-  options,
-  placeholder,
+  value, onChange, options, placeholder,
 }: {
-  value: string
-  onChange: (v: string) => void
-  options: string[]
-  placeholder?: string
+  value: string; onChange: (v: string) => void; options: string[]; placeholder?: string
 }) {
   return (
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="w-full rounded-lg border border-stone-200 bg-white px-3 py-2 text-sm text-stone-800 focus:border-stone-400 focus:outline-none focus:ring-2 focus:ring-stone-200 transition appearance-none cursor-pointer"
-    >
-      {placeholder && <option value="">{placeholder}</option>}
-      {options.map((o) => (
-        <option key={o} value={o}>
-          {o}
-        </option>
-      ))}
-    </select>
+    <div className="relative">
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-800 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 transition appearance-none cursor-pointer pr-8"
+      >
+        {placeholder && <option value="">{placeholder}</option>}
+        {options.map((o) => (
+          <option key={o} value={o}>{o}</option>
+        ))}
+      </select>
+      <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center">
+        <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </div>
+    </div>
   )
 }
 
 function ChipGroup({
-  options,
-  value,
-  onChange,
+  options, value, onChange,
 }: {
-  options: string[]
-  value: string
-  onChange: (v: string) => void
+  options: string[]; value: string; onChange: (v: string) => void
 }) {
   return (
     <div className="flex flex-wrap gap-2">
@@ -169,10 +145,10 @@ function ChipGroup({
           key={o}
           type="button"
           onClick={() => onChange(value === o ? '' : o)}
-          className={`px-3 py-1.5 rounded-full text-sm border transition ${
+          className={`px-4 py-1.5 rounded-full text-sm border transition-all ${
             value === o
-              ? 'bg-stone-800 text-white border-stone-800'
-              : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
+              ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+              : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-300 hover:text-indigo-600'
           }`}
         >
           {o}
@@ -182,30 +158,26 @@ function ChipGroup({
   )
 }
 
-function RatingGroup({
-  value,
-  onChange,
-}: {
-  value: string
-  onChange: (v: string) => void
-}) {
+function RatingGroup({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
-    <div className="flex gap-1.5 flex-wrap">
-      {DIFFICULTY.map((d) => (
-        <button
-          key={d}
-          type="button"
-          onClick={() => onChange(value === d ? '' : d)}
-          className={`w-9 h-9 rounded-lg text-sm font-medium border transition ${
-            value === d
-              ? 'bg-stone-800 text-white border-stone-800'
-              : 'bg-white text-stone-600 border-stone-200 hover:border-stone-400'
-          }`}
-        >
-          {d}
-        </button>
-      ))}
-      <div className="w-full flex justify-between text-xs text-stone-400 mt-0.5 px-1">
+    <div>
+      <div className="flex gap-1.5 flex-wrap">
+        {DIFFICULTY.map((d) => (
+          <button
+            key={d}
+            type="button"
+            onClick={() => onChange(value === d ? '' : d)}
+            className={`w-9 h-9 rounded-lg text-sm font-medium border transition-all ${
+              value === d
+                ? 'bg-indigo-600 text-white border-indigo-600 shadow-sm'
+                : 'bg-white text-slate-600 border-slate-200 hover:border-indigo-300 hover:text-indigo-600'
+            }`}
+          >
+            {d}
+          </button>
+        ))}
+      </div>
+      <div className="flex justify-between text-xs text-slate-400 mt-1.5 px-0.5">
         <span>Easy</span>
         <span>Very hard</span>
       </div>
@@ -243,76 +215,74 @@ export default function HealthForm() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
+      <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
         <div className="text-center max-w-sm">
-          <div className="w-14 h-14 rounded-full bg-stone-100 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-7 h-7 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="w-14 h-14 rounded-full bg-indigo-50 flex items-center justify-center mx-auto mb-4">
+            <svg className="w-7 h-7 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-stone-800 mb-2">Response received</h2>
-          <p className="text-stone-500 text-sm">Thank you for sharing your experience. Your response has been saved.</p>
+          <h2 className="text-xl font-semibold text-slate-800 mb-2">Response received</h2>
+          <p className="text-slate-500 text-sm leading-relaxed">Thank you for sharing your experience. Your response has been saved and will contribute to the research.</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start py-12 px-4">
+    <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-start py-12 px-4">
       <div className="w-full max-w-xl">
+
         {/* Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-2xl font-semibold text-stone-800 mb-1">Health Protocol Intake</h1>
+        <div className="mb-6 text-center">
+          <h1 className="text-2xl font-semibold text-slate-800 tracking-tight">Health Protocol Intake</h1>
         </div>
 
         {/* Intro */}
-        <div className="mb-8 text-center max-w-lg mx-auto space-y-3">
-          <p className="text-sm text-stone-400 leading-relaxed">
+        <div className="mb-8 max-w-lg mx-auto space-y-3 text-center">
+          <p className="text-sm text-slate-500 leading-relaxed">
             Many people have tried unconventional health protocols, often outside mainstream clinical practice. Some saw significant improvements. Some didn&apos;t. Either way, their experience is valuable data.
           </p>
-          <p className="text-sm text-stone-400 leading-relaxed">
+          <p className="text-sm text-slate-500 leading-relaxed">
             We&apos;re collecting these accounts to identify patterns that clinical research hasn&apos;t yet formalized, with a specific focus on helping cancer patients find approaches worth exploring alongside conventional treatment.
           </p>
-          <p className="text-sm text-stone-400 leading-relaxed">
+          <p className="text-sm text-slate-500 leading-relaxed">
             This form is anonymous by default. Share only what you&apos;re comfortable sharing. There are no right or wrong answers — honest accounts of what didn&apos;t work are just as important as successes.
+          </p>
+          <p className="text-sm text-slate-700 font-semibold pt-1">
+            All fields are optional. Skip anything you&apos;d rather not answer.
           </p>
         </div>
 
         {/* Progress */}
-        <div className="flex items-center gap-2 mb-8">
+        <div className="flex gap-2 mb-2">
           {STEPS.map((s, i) => (
-            <div key={s} className="flex items-center flex-1">
-              <div className="flex flex-col items-center w-full">
-                <div
-                  className={`w-full h-1 rounded-full transition-colors ${
-                    i < step ? 'bg-stone-800' : i === step ? 'bg-stone-400' : 'bg-stone-200'
-                  }`}
-                />
-                <span
-                  className={`mt-1.5 text-xs hidden sm:block ${
-                    i === step ? 'text-stone-700 font-medium' : 'text-stone-400'
-                  }`}
-                >
-                  {s}
-                </span>
-              </div>
+            <div key={s} className="flex-1 flex flex-col items-center gap-1.5">
+              <div className={`w-full h-1 rounded-full transition-all duration-300 ${
+                i < step ? 'bg-indigo-500' : i === step ? 'bg-indigo-300' : 'bg-slate-200'
+              }`} />
+              <span className={`text-xs hidden sm:block transition-colors ${
+                i === step ? 'text-indigo-600 font-medium' : i < step ? 'text-slate-400' : 'text-slate-300'
+              }`}>
+                {s}
+              </span>
             </div>
           ))}
         </div>
 
         {/* Step label (mobile) */}
-        <p className="sm:hidden text-xs text-stone-500 mb-4 text-center">
+        <p className="sm:hidden text-xs text-slate-400 mb-4 text-center">
           Step {step + 1} of {STEPS.length} — {STEPS[step]}
         </p>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl border border-stone-100 shadow-sm p-6 sm:p-8 space-y-5">
+        <div className="bg-white rounded-2xl border border-slate-100 shadow-sm shadow-slate-100 p-6 sm:p-8 space-y-5 mt-4">
 
-          {/* ── Section 1 ── */}
+          {/* ── Section 1: About You ── */}
           {step === 0 && (
             <>
               <div>
-                <Label optional>Name or identifier</Label>
+                <Label>Name or identifier</Label>
                 <TextInput
                   value={data.identifier}
                   onChange={set('identifier')}
@@ -320,15 +290,15 @@ export default function HealthForm() {
                 />
               </div>
               <div>
-                <Label optional>Age range</Label>
+                <Label>Age range</Label>
                 <ChipGroup options={AGE_RANGES} value={data.ageRange} onChange={set('ageRange')} />
               </div>
               <div>
-                <Label optional>Biological sex</Label>
+                <Label>Biological sex</Label>
                 <ChipGroup options={SEX_OPTIONS} value={data.biologicalSex} onChange={set('biologicalSex')} />
               </div>
               <div>
-                <Label optional>Relevant health conditions</Label>
+                <Label>Relevant health conditions</Label>
                 <TextArea
                   value={data.conditions}
                   onChange={set('conditions')}
@@ -336,7 +306,7 @@ export default function HealthForm() {
                 />
               </div>
               <div>
-                <Label optional>Current medications or supplements</Label>
+                <Label>Current medications or supplements</Label>
                 <TextArea
                   value={data.medications}
                   onChange={set('medications')}
@@ -344,8 +314,8 @@ export default function HealthForm() {
                 />
               </div>
               <div>
-                <Label optional>Cancer diagnosis</Label>
-                <p className="text-xs text-stone-400 mb-1.5">If applicable — type, stage, and when diagnosed. Leave blank if not relevant.</p>
+                <Label>Cancer diagnosis</Label>
+                <Hint>If applicable — type, stage, and when diagnosed. Leave blank if not relevant.</Hint>
                 <TextArea
                   value={data.cancerDiagnosis}
                   onChange={set('cancerDiagnosis')}
@@ -355,7 +325,7 @@ export default function HealthForm() {
             </>
           )}
 
-          {/* ── Section 2 ── */}
+          {/* ── Section 2: The Protocol ── */}
           {step === 1 && (
             <>
               <div>
@@ -387,11 +357,11 @@ export default function HealthForm() {
             </>
           )}
 
-          {/* ── Section 3 ── */}
+          {/* ── Section 3: Challenges ── */}
           {step === 2 && (
             <>
               <div>
-                <Label optional>What challenges or side effects did you encounter?</Label>
+                <Label>What challenges or side effects did you encounter?</Label>
                 <TextArea
                   rows={4}
                   value={data.issues}
@@ -400,7 +370,7 @@ export default function HealthForm() {
                 />
               </div>
               <div>
-                <Label optional>What adjustments or workarounds did you try?</Label>
+                <Label>What adjustments or workarounds did you try?</Label>
                 <TextArea
                   rows={4}
                   value={data.adjustments}
@@ -409,13 +379,13 @@ export default function HealthForm() {
                 />
               </div>
               <div>
-                <Label optional>Overall difficulty rating</Label>
+                <Label>Overall difficulty rating</Label>
                 <RatingGroup value={data.difficultyRating} onChange={set('difficultyRating')} />
               </div>
             </>
           )}
 
-          {/* ── Section 4 ── */}
+          {/* ── Section 4: Outcomes ── */}
           {step === 3 && (
             <>
               <div>
@@ -428,7 +398,7 @@ export default function HealthForm() {
                 />
               </div>
               <div>
-                <Label optional>Any formal tracking or lab work?</Label>
+                <Label>Any formal tracking or lab work?</Label>
                 <TextArea
                   rows={3}
                   value={data.formalTracking}
@@ -446,7 +416,7 @@ export default function HealthForm() {
                 />
               </div>
               <div>
-                <Label optional>Anything else you want to add?</Label>
+                <Label>Anything else you want to add?</Label>
                 <TextArea
                   rows={3}
                   value={data.anythingElse}
@@ -459,15 +429,17 @@ export default function HealthForm() {
         </div>
 
         {/* Error */}
-        {error && <p className="mt-3 text-sm text-red-500 text-center">{error}</p>}
+        {error && (
+          <p className="mt-3 text-sm text-red-500 text-center">{error}</p>
+        )}
 
         {/* Navigation */}
-        <div className="mt-5 flex justify-between">
+        <div className="mt-5 flex justify-between items-center">
           <button
             type="button"
             onClick={() => setStep((s) => s - 1)}
             disabled={step === 0}
-            className="px-5 py-2.5 text-sm rounded-lg border border-stone-200 text-stone-600 hover:bg-stone-50 disabled:opacity-0 transition"
+            className="px-5 py-2.5 text-sm rounded-xl border border-slate-200 text-slate-500 hover:bg-slate-50 hover:border-slate-300 disabled:opacity-0 transition"
           >
             Back
           </button>
@@ -476,7 +448,7 @@ export default function HealthForm() {
             <button
               type="button"
               onClick={() => setStep((s) => s + 1)}
-              className="px-6 py-2.5 text-sm rounded-lg bg-stone-800 text-white hover:bg-stone-700 transition font-medium"
+              className="px-6 py-2.5 text-sm rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 transition font-medium shadow-sm"
             >
               Continue
             </button>
@@ -485,7 +457,7 @@ export default function HealthForm() {
               type="button"
               onClick={handleSubmit}
               disabled={submitting}
-              className="px-6 py-2.5 text-sm rounded-lg bg-stone-800 text-white hover:bg-stone-700 disabled:opacity-60 transition font-medium"
+              className="px-6 py-2.5 text-sm rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-60 transition font-medium shadow-sm"
             >
               {submitting ? 'Submitting…' : 'Submit'}
             </button>
