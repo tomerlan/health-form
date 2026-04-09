@@ -244,7 +244,10 @@ export default function HealthForm() {
             Many people have tried unconventional health protocols, often outside mainstream clinical practice. Some saw significant improvements. Some didn&apos;t. Either way, their experience is valuable data.
           </p>
           <p className="text-sm text-slate-500 leading-relaxed">
-            We&apos;re collecting these accounts to identify patterns that clinical research hasn&apos;t yet formalized, with a specific focus on helping cancer patients find approaches worth exploring alongside conventional treatment.
+            We&apos;re collecting these accounts to identify patterns that clinical research hasn&apos;t yet formalized, with a particular focus on cancer patients — though experiences with any serious or chronic condition are equally welcome.
+          </p>
+          <p className="text-sm text-slate-500 leading-relaxed">
+            The goal is to build a body of documented, structured accounts that can support wider recognition and formal validation of approaches that currently exist only as scattered anecdote. Your experience, recorded carefully, becomes evidence.
           </p>
           <p className="text-sm text-slate-500 leading-relaxed">
             This form is anonymous by default. Share only what you&apos;re comfortable sharing. There are no right or wrong answers — honest accounts of what didn&apos;t work are just as important as successes.
